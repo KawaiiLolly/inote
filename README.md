@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+📒 iNote - MERN Stack Notes Application
+iNote is a full-stack web application that lets users securely create, manage, and delete personal notes. Built using the MERN stack (MongoDB, Express, React, Node.js) with JWT-based authentication.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Features
+✅ User Authentication (JWT)
+✅ Passwords stored securely with bcrypt hashing
+✅ Protected Routes using Middleware
+✅ Add, View, Update & Delete Notes
+✅ Notes are private to each user
+✅ Express Validator for input sanitization
+✅ MongoDB for persistent storage
 
-## Available Scripts
+🛠️ Tech Stack
+Frontend: React, Bootstrap
 
-In the project directory, you can run:
+Backend: Node.js, Express.js
 
-### `npm start`
+Database: MongoDB Atlas or Local MongoDB
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Authentication: JSON Web Tokens (JWT)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Password Security: bcryptjs
 
-### `npm test`
+Validation: express-validator
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+📁 Project Structure
+bash
+Copy
+Edit
+/backend
+├── index.js              # Server Entry Point
+├── db.js                 # MongoDB Connection Logic
+├── models/Users.js       # User Schema
+├── models/Notes.js       # Notes Schema
+├── routes/auth.js        # Authentication Routes
+├── routes/notes.js       # Notes Routes
+├── middleware/fetchUser.js # JWT Token Middleware
 
-### `npm run build`
+/frontend
+├── src
+│   ├── App.js            # Main React App
+│   ├── components/       # React Components (Navbar, Notes, etc.)
+│   ├── context/          # State Management with Context API
+🔒 Authentication Flow
+Register User:
+POST /api/auth/createuser
+Returns a JWT on successful registration.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Login User:
+POST /api/auth/login
+Returns a JWT if credentials are valid.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Protected Routes:
+Use auth-token in headers for routes like adding, fetching, updating, or deleting notes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+📌 API Endpoints
+Auth Routes
+Route	Method	Description	Protected
+/api/auth/createuser	POST	Register a new user	❌
+/api/auth/login	POST	Login with existing user	❌
 
-### `npm run eject`
+Notes Routes
+Route	Method	Description	Protected
+/api/notes/fetchallnotes	GET	Fetch user's notes	✅
+/api/notes/addnote	POST	Add a new note	✅
+/api/notes/updatenote/:id	PUT	Update a specific note	✅
+/api/notes/deletenote/:id	DELETE	Delete a note	✅
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+⚙️ Installation & Setup
+Backend Setup
+bash
+Copy
+Edit
+cd backend
+npm install
+Create a .env file in /backend for environment variables (Optional for now if hardcoded keys used).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Start the server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+bash
+Copy
+Edit
+nodemon index.js
+Frontend Setup
+bash
+Copy
+Edit
+cd frontend
+npm install
+npm start
+📝 Notes
+Passwords are securely hashed using bcryptjs.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Authentication is handled via JWT; token must be sent in headers as auth-token.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Only the owner of a note can modify or delete it.
